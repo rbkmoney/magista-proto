@@ -54,6 +54,13 @@ struct PayoutSearchQuery {
     4: optional domain.PayoutToolInfo payout_type
 }
 
+struct InvoiceTemplateSearchQuery {
+    1: required SearchQuery search_query
+    2: optional domain.InvoiceTemplateID invoice_template_id
+    3: optional base.Timestamp invoice_valid_until
+    4: optional string product
+}
+
 struct SearchQuery {
     1: required base.Timestamp to_time
     2: required base.Timestamp from_time
@@ -64,15 +71,15 @@ struct SearchQuery {
 }
 
 struct PaymentParams {
-    1:  optional domain.InvoicePaymentID payment_id
-    2:  optional domain.InvoicePaymentStatus payment_status
-    3:  optional domain.InvoicePaymentFlow payment_flow
-    4:  optional domain.PaymentTool payment_tool
-    5:  optional domain.LegacyTerminalPaymentProvider payment_terminal_provider
-    6:  optional string payment_email
-    7:  optional string payment_ip
-    8:  optional string payment_fingerprint
-    9:  optional string payment_first6
+    1: optional domain.InvoicePaymentID payment_id
+    2: optional domain.InvoicePaymentStatus payment_status
+    3: optional domain.InvoicePaymentFlow payment_flow
+    4: optional domain.PaymentTool payment_tool
+    5: optional domain.LegacyTerminalPaymentProvider payment_terminal_provider
+    6: optional string payment_email
+    7: optional string payment_ip
+    8: optional string payment_fingerprint
+    9: optional string payment_first6
     10: optional domain.LegacyBankCardPaymentSystem payment_system
     12: optional string payment_last4
     11: optional domain.CustomerID payment_customer_id
@@ -114,6 +121,23 @@ struct StatPayoutResponse {
     2: optional string continuation_token
 }
 
+struct StatInvoiceTemplateResponse {
+    1: required list<StatInvoiceTemplate> invoice_templates
+    2: optional string continuation_token
+}
+
+struct StatInvoiceTemplate {
+    1: required base.Timestamp created_at
+    2: required domain.PartyID party_id
+    3: required domain.ShopID shop_id
+    4: required domain.InvoiceTemplateID invoice_template_id
+    5: required base.Timestamp invoice_valid_until
+    6: required string product
+    7: optional string description
+    8: optional domain.InvoiceTemplateDetails details
+    9: optional domain.InvoiceContext context
+}
+
 service MerchantStatisticsService {
 
     StatInvoiceResponse SearchInvoices (1: InvoiceSearchQuery invoice_search_query)
@@ -129,6 +153,9 @@ service MerchantStatisticsService {
         throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
     StatPayoutResponse SearchPayouts (1: PayoutSearchQuery payout_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
+
+    StatInvoiceTemplateResponse SearchInvoiceTemplates (1: InvoiceTemplateSearchQuery invoice_template_search_query)
         throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
 }
