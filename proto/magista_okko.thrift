@@ -60,10 +60,10 @@ struct StatResponse {
 
 service OkkoMerchantStatisticsService {
 
-    StatResponse SearchInvoicesByPaymentQuery (PaymentSearchQuery payment_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatResponse SearchInvoicesByPaymentQuery (1: PaymentSearchQuery payment_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchInvoicesByRefundQuery (RefundSearchQuery refund_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatResponse SearchInvoicesByRefundQuery (1: RefundSearchQuery refund_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
 }

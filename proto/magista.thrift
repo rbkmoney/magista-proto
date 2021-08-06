@@ -89,34 +89,46 @@ struct PaymentParams {
     23: optional domain.LegacyBankCardTokenProvider payment_token_provider
 }
 
-struct StatResponse {
-    1: required StatResponseData data
+struct StatInvoiceResponse {
+    1: required list<merch_stat.StatInvoice> invoices
     2: optional string continuation_token
 }
 
-union StatResponseData {
-    1: list<merch_stat.StatInvoice> invoices
-    2: list<merch_stat.StatPayment> payments
-    3: list<merch_stat.StatRefund> refunds
-    4: list<merch_stat.StatChargeback> chargebacks
-    5: list<merch_stat.StatPayout> payouts
+struct StatPaymentResponse {
+    1: required list<merch_stat.StatPayment> payments
+    2: optional string continuation_token
+}
+
+struct StatRefundResponse {
+    1: required list<merch_stat.StatRefund> refunds
+    2: optional string continuation_token
+}
+
+struct StatChargebackResponse {
+    1: required list<merch_stat.StatChargeback> chargebacks
+    2: optional string continuation_token
+}
+
+struct StatPayoutResponse {
+    1: required list<merch_stat.StatPayout> payouts
+    2: optional string continuation_token
 }
 
 service MerchantStatisticsService {
 
-    StatResponse SearchInvoices (InvoiceSearchQuery invoice_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatInvoiceResponse SearchInvoices (1: InvoiceSearchQuery invoice_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchPayments (PaymentSearchQuery payment_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatPaymentResponse SearchPayments (1: PaymentSearchQuery payment_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchRefunds (RefundSearchQuery refund_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatRefundResponse SearchRefunds (1: RefundSearchQuery refund_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchChargebacks (ChargebackSearchQuery chargeback_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatChargebackResponse SearchChargebacks (1: ChargebackSearchQuery chargeback_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchPayouts (PayoutSearchQuery payout_search_query)
-        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2)
+    StatPayoutResponse SearchPayouts (1: PayoutSearchQuery payout_search_query)
+        throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
 }
