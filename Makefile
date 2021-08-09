@@ -10,7 +10,7 @@ TEMPLATES_PATH := .
 SERVICE_NAME := magista-proto
 
 # Build image tag to be used
-BUILD_IMAGE_TAG := b04c5291d101132e53e578d96e1628d2e6dab0c0
+BUILD_IMAGE_TAG := 25c031edd46040a8745334570940a0f0b2154c5c
 CALL_ANYWHERE := \
 	all submodules rebar-update compile clean distclean
 
