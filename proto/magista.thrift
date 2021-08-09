@@ -12,7 +12,7 @@ exception BadContinuationToken { 1: string reason }
 exception LimitExceeded {}
 
 struct InvoiceSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: required PaymentParams payment_params
     3: optional list<domain.InvoiceID> invoice_ids
     4: optional domain.InvoiceStatus invoice_status
@@ -21,7 +21,7 @@ struct InvoiceSearchQuery {
 }
 
 struct PaymentSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: required PaymentParams payment_params
     3: optional list<domain.InvoiceID> invoice_ids
     4: optional string external_id
@@ -29,7 +29,7 @@ struct PaymentSearchQuery {
 }
 
 struct RefundSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: optional list<domain.InvoiceID> invoice_ids
     3: optional domain.InvoicePaymentID payment_id
     4: optional domain.InvoicePaymentRefundID refund_id
@@ -38,7 +38,7 @@ struct RefundSearchQuery {
 }
 
 struct ChargebackSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: optional list<domain.InvoiceID> invoice_ids
     3: optional domain.InvoicePaymentID payment_id
     4: optional domain.InvoicePaymentChargebackID chargeback_id
@@ -48,20 +48,20 @@ struct ChargebackSearchQuery {
 }
 
 struct PayoutSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: optional payout_manager.PayoutID payout_id
     3: optional list<payout_manager.PayoutStatus> payout_statuses
     4: optional domain.PayoutToolInfo payout_type
 }
 
 struct InvoiceTemplateSearchQuery {
-    1: required SearchQuery search_query
+    1: required CommonSearchQueryParams common_search_query_params
     2: optional domain.InvoiceTemplateID invoice_template_id
     3: optional base.Timestamp invoice_valid_until
     4: optional string product
 }
 
-struct SearchQuery {
+struct CommonSearchQueryParams {
     1: required base.Timestamp to_time
     2: required base.Timestamp from_time
     3: required domain.PartyID party_id

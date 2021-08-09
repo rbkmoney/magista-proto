@@ -1,6 +1,7 @@
 include "proto/base.thrift"
 include "proto/domain.thrift"
 include "proto/merch_stat.thrift"
+include "proto/magista.thrift"
 
 namespace java com.rbkmoney.magista.okko
 namespace erlang magista_okko
@@ -11,7 +12,7 @@ exception BadContinuationToken { 1: string reason }
 exception LimitExceeded {}
 
 struct PaymentSearchQuery {
-    1: required SearchQuery search_query
+    1: required magista.CommonSearchQueryParams common_search_query_params
     2: optional domain.InvoiceID invoice_id
     3: optional domain.InvoicePaymentID payment_id
     4: optional domain.InvoicePaymentStatus payment_status
@@ -36,7 +37,7 @@ struct PaymentSearchQuery {
 }
 
 struct RefundSearchQuery {
-    1: required SearchQuery search_query
+    1: required magista.CommonSearchQueryParams common_search_query_params
     2: optional domain.InvoiceID invoice_id
     3: optional domain.InvoicePaymentID payment_id
     4: optional domain.InvoicePaymentRefundID refund_id
@@ -44,26 +45,17 @@ struct RefundSearchQuery {
     6: optional string external_id
 }
 
-struct SearchQuery {
-    1: optional base.Timestamp to_time
-    2: optional base.Timestamp from_time
-    3: optional domain.PartyID party_id
-    4: optional domain.ShopID shop_id
-    5: optional ContinuationToken continuation_token
-    6: optional i32 limit
-}
-
-struct StatResponse {
+struct StatEnrichedStatInvoiceResponse {
     1: required list<merch_stat.EnrichedStatInvoice> enriched_invoices
     2: optional ContinuationToken continuation_token
 }
 
 service OkkoMerchantStatisticsService {
 
-    StatResponse SearchInvoicesByPaymentQuery (1: PaymentSearchQuery payment_search_query)
+    StatEnrichedStatInvoiceResponse SearchInvoicesByPaymentSearchQuery (1: PaymentSearchQuery payment_search_query)
         throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
-    StatResponse SearchInvoicesByRefundQuery (1: RefundSearchQuery refund_search_query)
+    StatEnrichedStatInvoiceResponse SearchInvoicesByRefundSearchQuery (1: RefundSearchQuery refund_search_query)
         throws (1: BadContinuationToken ex1, 2: LimitExceeded ex2, 3: base.InvalidRequest ex3)
 
 }
