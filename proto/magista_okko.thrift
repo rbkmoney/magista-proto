@@ -1,7 +1,7 @@
 include "proto/base.thrift"
 include "proto/domain.thrift"
 include "proto/merch_stat.thrift"
-include "proto/magista.thrift"
+include "magista.thrift"
 
 namespace java com.rbkmoney.magista.okko
 namespace erlang magista_okko
