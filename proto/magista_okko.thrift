@@ -1,6 +1,5 @@
 include "proto/base.thrift"
 include "proto/domain.thrift"
-include "proto/merch_stat.thrift"
 include "magista.thrift"
 
 namespace java com.rbkmoney.magista.okko
@@ -46,8 +45,14 @@ struct RefundSearchQuery {
 }
 
 struct StatEnrichedStatInvoiceResponse {
-    1: required list<merch_stat.EnrichedStatInvoice> enriched_invoices
+    1: required list<EnrichedStatInvoice> enriched_invoices
     2: optional ContinuationToken continuation_token
+}
+
+struct EnrichedStatInvoice {
+    1: required magista.StatInvoice invoice
+    2: required list<magista.StatPayment> payments
+    3: required list<magista.StatRefund> refunds
 }
 
 service OkkoMerchantStatisticsService {
