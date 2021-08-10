@@ -301,15 +301,15 @@ enum DigitalWalletProvider {
 }
 
 struct StatInvoice {
-    1 : required domain.InvoiceID id
-    2 : required domain.PartyID owner_id
-    3 : required domain.ShopID shop_id
-    4 : required base.Timestamp created_at
-    5 : required InvoiceStatus status
-    6 : required string product
-    7 : optional string description
-    8 : required base.Timestamp due
-    9 : required domain.Amount amount
+    1: required domain.InvoiceID id
+    2: required domain.PartyID owner_id
+    3: required domain.ShopID shop_id
+    4: required base.Timestamp created_at
+    5: required InvoiceStatus status
+    6: required string product
+    7: optional string description
+    8: required base.Timestamp due
+    9: required domain.Amount amount
     10: required string currency_symbolic_code
     11: optional base.Content context
     12: optional domain.InvoiceCart cart
@@ -342,15 +342,15 @@ struct StatCustomer {
 typedef base.ID PayoutID
 
 struct StatPayout {
-    1 : required PayoutID id
-    2 : required domain.PartyID party_id
-    3 : required domain.ShopID shop_id
-    4 : required base.Timestamp created_at
-    5 : required PayoutStatus status
-    6 : required domain.Amount amount
-    7 : required domain.Amount fee
-    8 : required string currency_symbolic_code
-    9 : required domain.PayoutToolInfo payout_tool_info
+    1: required PayoutID id
+    2: required domain.PartyID party_id
+    3: required domain.ShopID shop_id
+    4: required base.Timestamp created_at
+    5: required PayoutStatus status
+    6: required domain.Amount amount
+    7: required domain.Amount fee
+    8: required string currency_symbolic_code
+    9: required domain.PayoutToolInfo payout_tool_info
 }
 
 union PayoutStatus {
@@ -366,15 +366,15 @@ struct PayoutCancelled { 1: required string details }
 struct PayoutConfirmed {}
 
 struct StatRefund {
-    1 : required domain.InvoicePaymentRefundID id
-    2 : required domain.InvoicePaymentID payment_id
-    3 : required domain.InvoiceID invoice_id
-    4 : required domain.PartyID owner_id
-    5 : required domain.ShopID shop_id
-    6 : required InvoicePaymentRefundStatus status
-    7 : required base.Timestamp created_at
-    8 : required domain.Amount amount
-    9 : required domain.Amount fee
+    1: required domain.InvoicePaymentRefundID id
+    2: required domain.InvoicePaymentID payment_id
+    3: required domain.InvoiceID invoice_id
+    4: required domain.PartyID owner_id
+    5: required domain.ShopID shop_id
+    6: required InvoicePaymentRefundStatus status
+    7: required base.Timestamp created_at
+    8: required domain.Amount amount
+    9: required domain.Amount fee
     10: required string currency_symbolic_code
     11: optional string reason
     12: optional domain.InvoiceCart cart
