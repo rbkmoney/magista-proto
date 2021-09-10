@@ -99,7 +99,7 @@ struct PaymentParams {
 }
 
 enum InvoiceTemplateStatus {
-    created,
+    created
     deleted
 }
 
