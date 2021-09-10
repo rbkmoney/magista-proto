@@ -46,13 +46,13 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.506-d109690</version>
+            <version>1.513-fcb8e91</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>payout-manager-proto</artifactId>
-            <version>1.20-608dd90</version>
+            <version>1.21-bdd9888</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
