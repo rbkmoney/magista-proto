@@ -7,6 +7,8 @@ namespace java com.rbkmoney.magista
 namespace erlang magista
 
 typedef string ContinuationToken
+typedef map<string, string> StatInfo
+typedef base.ID PayoutID
 
 exception BadContinuationToken { 1: string reason }
 exception LimitExceeded {}
@@ -15,7 +17,7 @@ struct InvoiceSearchQuery {
     1: required CommonSearchQueryParams common_search_query_params
     2: required PaymentParams payment_params
     3: optional list<domain.InvoiceID> invoice_ids
-    4: optional InvoiceStatus invoice_status
+    4: optional domain.InvoiceStatus invoice_status
     5: optional domain.Amount invoice_amount
     6: optional string external_id
 }
@@ -33,7 +35,7 @@ struct RefundSearchQuery {
     2: optional list<domain.InvoiceID> invoice_ids
     3: optional domain.InvoicePaymentID payment_id
     4: optional domain.InvoicePaymentRefundID refund_id
-    5: optional InvoicePaymentRefundStatus refund_status
+    5: optional domain.InvoicePaymentRefundStatus refund_status
     6: optional string external_id
 }
 
@@ -74,9 +76,9 @@ struct CommonSearchQueryParams {
 
 struct PaymentParams {
     1: optional domain.InvoicePaymentID payment_id
-    2: optional InvoicePaymentStatus payment_status
-    3: optional InvoicePaymentFlowType payment_flow
-    4: optional PaymentToolType payment_tool
+    2: optional domain.InvoicePaymentStatus payment_status
+    3: optional domain.InvoicePaymentFlow payment_flow
+    4: optional domain.PaymentTool payment_tool
     5: optional domain.LegacyTerminalPaymentProvider payment_terminal_provider
     6: optional string payment_email
     7: optional string payment_ip
@@ -139,14 +141,14 @@ struct StatPayment {
     3: required domain.PartyID owner_id
     4: required domain.ShopID shop_id
     5: required base.Timestamp created_at
-    6: required InvoicePaymentStatus status
+    6: required domain.InvoicePaymentStatus status
     7: required domain.Amount amount
     8: required domain.Amount fee
     9: required string currency_symbolic_code
-    10: required Payer payer
+    10: required domain.Payer payer
     12: optional base.Content context
     13: optional geo_ip.LocationInfo location_info
-    14: required InvoicePaymentFlow flow
+    14: required domain.InvoicePaymentFlow flow
     15: optional string short_id
     16: optional bool make_recurrent
     17: required domain.DataRevision domain_revision
@@ -157,58 +159,6 @@ struct StatPayment {
     22: optional domain.TerminalRef terminal_id
     23: optional base.Timestamp status_changed_at
     24: optional domain.OperationFailure failure
-}
-
-union Payer {
-    1: domain.PaymentResourcePayer payment_resource
-    2: CustomerPayer        customer
-    3: domain.RecurrentPayer       recurrent
-}
-
-struct CustomerPayer {
-    1: required domain.CustomerID customer_id
-    2: required domain.PaymentTool payment_tool
-    3: optional domain.ContactInfo contact_info
-}
-
-enum InvoicePaymentFlowType {
-    instant
-    hold
-}
-
-union InvoicePaymentFlow {
-    1: InvoicePaymentFlowInstant instant
-    2: InvoicePaymentFlowHold hold
-}
-
-struct InvoicePaymentFlowInstant   {}
-
-struct InvoicePaymentFlowHold {
-    1: required OnHoldExpiration on_hold_expiration
-    2: required base.Timestamp held_until
-}
-
-enum OnHoldExpiration {
-    cancel
-    capture
-}
-
-enum InvoicePaymentStatus {
-    pending
-    processed
-    captured
-    cancelled
-    refunded
-    failed
-    charged_back
-}
-
-enum PaymentToolType {
-    bank_card
-    payment_terminal
-    digital_wallet
-    crypto_currency
-    mobile_commerce
 }
 
 struct StatInvoice {
@@ -227,37 +177,16 @@ struct StatInvoice {
     13: optional string external_id
 }
 
-enum InvoiceStatus {
-    unpaid
-    paid
-    cancelled
-    fulfilled
-}
-
-struct StatCustomer {
-    1: required domain.Fingerprint id
-    2: required base.Timestamp created_at
-}
-
-typedef base.ID PayoutID
-
 struct StatPayout {
     1: required PayoutID id
     2: required domain.PartyID party_id
     3: required domain.ShopID shop_id
     4: required base.Timestamp created_at
-    5: required PayoutStatus status
+    5: required payout_manager.PayoutStatus status
     6: required domain.Amount amount
     7: required domain.Amount fee
     8: required string currency_symbolic_code
     9: required domain.PayoutToolInfo payout_tool_info
-}
-
-union PayoutStatus {
-    1: PayoutUnpaid unpaid
-    2: PayoutPaid paid
-    3: PayoutCancelled cancelled
-    4: PayoutConfirmed confirmed
 }
 
 struct PayoutUnpaid {}
@@ -280,15 +209,6 @@ struct StatRefund {
     12: optional domain.InvoiceCart cart
     13: optional string external_id
 }
-
-enum InvoicePaymentRefundStatus {
-    pending
-    succeeded
-    failed
-}
-
-typedef map<string, string> StatInfo
-typedef base.InvalidRequest InvalidRequest
 
 struct StatChargeback {
     1: required domain.InvoiceID invoice_id
