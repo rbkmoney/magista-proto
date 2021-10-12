@@ -161,7 +161,7 @@ struct StatPayment {
     20: optional string external_id
     21: optional domain.ProviderRef provider_id
     22: optional domain.TerminalRef terminal_id
-    23: required base.Timestamp changed_at
+    23: optional base.Timestamp status_changed_at
 }
 
 union Payer {
@@ -230,7 +230,7 @@ struct StatInvoice {
     11: optional base.Content context
     12: optional domain.InvoiceCart cart
     13: optional string external_id
-    14: required base.Timestamp changed_at
+    14: optional base.Timestamp status_changed_at
 }
 
 enum InvoiceStatus {
@@ -257,7 +257,6 @@ struct StatPayout {
     7: required domain.Amount fee
     8: required string currency_symbolic_code
     9: required domain.PayoutToolInfo payout_tool_info
-    10: required base.Timestamp changed_at
 }
 
 union PayoutStatus {
@@ -286,7 +285,7 @@ struct StatRefund {
     11: optional string reason
     12: optional domain.InvoiceCart cart
     13: optional string external_id
-    14: required base.Timestamp changed_at
+    14: optional base.Timestamp status_changed_at
 }
 
 enum InvoicePaymentRefundStatus {
@@ -317,7 +316,6 @@ struct StatChargeback {
     17: optional domain.InvoicePaymentChargebackStage stage
     18: optional base.Content content
     19: optional string external_id
-    20: required base.Timestamp changed_at
 }
 
 struct StatInvoiceTemplate {
